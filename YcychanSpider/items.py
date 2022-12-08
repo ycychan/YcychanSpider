@@ -22,6 +22,7 @@ class LzacgItem(scrapy.Item):
     lz_contexts = scrapy.Field()
     lz_send_time = scrapy.Field()
     lz_other = scrapy.Field()
+    files = scrapy.Field()
 
 
 class DmhyItem(scrapy.Item):

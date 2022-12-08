@@ -4,13 +4,7 @@
 # @Email   : duominuoaier@gmail.com
 # @File    : main.py
 # @Software: PyCharm
-import time
-
-import parsel
-import requests
 from scrapy.cmdline import execute
-
-import header
 
 execute('scrapy crawl LzacgSpider'.split())
 

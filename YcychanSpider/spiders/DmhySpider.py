@@ -9,8 +9,8 @@ import traceback
 
 import scrapy
 
-from header import get_random_user_agents
-import items
+# from header import get_random_user_agents
+# import items
 
 
 class DmhySpider(scrapy.Spider):

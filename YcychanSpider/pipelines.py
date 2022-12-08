@@ -9,6 +9,7 @@ import pymysql
 import xlwings as xlwings
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+from scrapy.pipelines.files import FilesPipeline
 
 import YcychanSpider.items
 from WpSpider import WpSpider
@@ -71,11 +72,20 @@ class LzacgSpiderPipeline:
                 else:
                     for index in range(len(res_data[k])):  # 遍历http资源链接
                         if res_data[k][index] != '' and res_data[k][index].find('EOR') == -1:
-                            res_url_node = xml_galgame_node.appendChild(self.xml_doc.createElement(f'url{index}'))
+                            res_url_node = xml_galgame_node.appendChild(self.xml_doc.createElement('url'))
                             res_url_node.appendChild(self.xml_doc.createTextNode(res_data[k][index]))
             else:
                 if res_data[k] is not None and res_data[k].find('EOR') == -1:
                     xml_galgame_node.appendChild(self.xml_doc.createTextNode(res_data[k]))
+
+
+class LzacgResourcePipeline(FilesPipeline):
+    def get_media_requests(self, item, info):
+        print(item.get('lz_type'))
+        pass
+
+    def file_path(self, request, response=None, info=None, *, item=None):
+        pass
 
 
 class DmhySpiderPipeline:

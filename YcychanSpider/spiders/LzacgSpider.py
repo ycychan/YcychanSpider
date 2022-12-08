@@ -6,16 +6,15 @@
 # @Software: PyCharm
 import re
 
-import settings
 import scrapy
 from scrapy.http import Response
 
-from WpSpider import WpSpider
+from YcychanSpider.WpSpider import WpSpider
 from YcychanSpider import header
 from YcychanSpider.items import LzacgItem
 
 
-class LzacgSpider(scrapy.Spider, WpSpider):
+class LzacgSpider(scrapy.Spider):
     name = "LzacgSpider"
     allowed_domains = ["lzacg.one"]
     home = 'https://lzacg.one/'
@@ -26,15 +25,15 @@ class LzacgSpider(scrapy.Spider, WpSpider):
     # 需要获取的资源链接全部返回给引擎进行获取
     def start_requests(self):
         # for i in range(34):
-        for i in range(1, 34):  # 目标33页，需要+1
+        for i in range(1, 2):  # 目标33页，需要+1
             lzacg_pc = LzacgItem()
             lzacg_pc['lz_type'] = 'PC'
             yield scrapy.http.Request(url=f'{self.home}galgame/page/{i}', headers=header.get_random_user_agents(),
                                       callback=self.resource_url_parse, meta={'item': lzacg_pc})
 
-        for i in range(1, 15):  # 目标14页，需要+1
-            yield scrapy.http.Request(url=f'{self.home}kr/page/{i}', headers=header.get_random_user_agents(),
-                                      callback=self.resource_url_parse)
+        # for i in range(1, 15):  # 目标14页，需要+1
+        #     yield scrapy.http.Request(url=f'{self.home}kr/page/{i}', headers=header.get_random_user_agents(),
+        #                               callback=self.resource_url_parse)
 
     def resource_url_parse(self, response: Response):
         """将每一页的每一个资源都返回给引擎"""
